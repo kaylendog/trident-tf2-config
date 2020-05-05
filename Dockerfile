@@ -19,7 +19,7 @@ RUN mkdir steamcmd \
     && wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -
 
 # Install TF2 as steam user.
-RUN [ "./steamcmd/steamcmd.sh", "+login anonymous", "+force_install_dir /home/steam/tf2", "+app_update 232250 validate", "+quit'"]
+RUN [ "./steamcmd/steamcmd.sh", "+login anonymous", "+force_install_dir /home/steam/tf2", "+app_update 232250 validate", "+quit"]
 
 # Install sourcemod
 RUN cd /home/steam/tf2/tf \
