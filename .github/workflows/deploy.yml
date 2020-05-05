@@ -19,7 +19,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: 'Server deployment `{{ github.sha }}` is currently being rolled out.'
+          args: 'Server deployment `${{ github.sha }}` is currently being rolled out.'
 
       - name: Build server image
         run: docker build . --tag skyefoxie/trident-tf2:${{ github.sha }}
