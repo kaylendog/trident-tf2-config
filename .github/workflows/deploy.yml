@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Login to Docker
         run: docker login  -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
@@ -35,6 +35,6 @@ jobs:
       - name: Deploy to Kubernetes cluster
         uses: Azure/k8s-deploy@v1
           with:
-          namespace: 'trident'
-          images: 'skyefoxie/trident-tf2:${{ github.sha }}'
+            namespace: 'trident'
+            images: 'skyefoxie/trident-tf2:${{ github.sha }}'
 
