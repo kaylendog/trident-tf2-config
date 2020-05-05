@@ -27,14 +27,3 @@ jobs:
       - name: Push image to Docker Hub
         run: docker push skyefoxie/trident-tf2
 
-      - uses: azure/k8s-set-context@v1
-        with:
-          method: kubeconfig
-          kubeconfig: kubeconfig.yml # Use secret (https://developer.github.com/actions/managing-workflows/storing-secrets/)
-
-      - name: Deploy to Kubernetes cluster
-        uses: Azure/k8s-deploy@v1
-          with:
-            namespace: 'trident'
-            images: 'skyefoxie/trident-tf2:${{ github.sha }}'
-
