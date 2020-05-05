@@ -9,6 +9,7 @@ RUN set -x \
     wget=1.20.1-1.1 \
     ca-certificates=20190110 
 
+RUN useradd -u 1000 -m steam
 WORKDIR /home/steam
 
 # Install SteamCMD in ~/steamcmd
