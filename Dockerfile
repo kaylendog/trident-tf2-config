@@ -33,8 +33,10 @@ RUN apt-get remove --purge -y \
 
 WORKDIR /home/instances/tf2
 
-COPY ./cfg ./maps ./tf/
+# Copy configuration
+COPY ./tf ./tf
 COPY ./tf2_update.txt .
+COPY ./sourcemod/ ./addons/sourcemod
 
 VOLUME [ "/home/instances/tf2" ]
 
