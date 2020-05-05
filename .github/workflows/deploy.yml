@@ -9,30 +9,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Login to Docker
-      run: docker login  -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-  
-    - name: Call Discord webhook
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-      uses: Ilshidur/action-discord@master
-      with:
-        args: 'Server deployment `{{ github.sha }}` is currently being rolled out.'
+      - name: Login to Docker
+        run: docker login  -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build server image
-      run: docker build . --tag skyefoxie/trident-tf2:${{ github.sha }}
-    
-    - name: Push image to Docker Hub
-      run: docker push skyefoxie/trident-tf2
-    
-    - uses: azure/k8s-set-context@v1
-      with:
-        method: kubeconfig
-        kubeconfig: kubeconfig.yml # Use secret (https://developer.github.com/actions/managing-workflows/storing-secrets/)
-    
-    - name: Deploy to Kubernetes cluster
-      uses: Azure/k8s-deploy@v1
+      - name: Call Discord webhook
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
         with:
-        namespace: 'trident'
-        images: 'skyefoxie/trident-tf2:${{ github.sha }}'
+          args: 'Server deployment `{{ github.sha }}` is currently being rolled out.'
+
+      - name: Build server image
+        run: docker build . --tag skyefoxie/trident-tf2:${{ github.sha }}
+
+      - name: Push image to Docker Hub
+        run: docker push skyefoxie/trident-tf2
+
+      - uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: kubeconfig.yml # Use secret (https://developer.github.com/actions/managing-workflows/storing-secrets/)
+
+      - name: Deploy to Kubernetes cluster
+        uses: Azure/k8s-deploy@v1
+          with:
+          namespace: 'trident'
+          images: 'skyefoxie/trident-tf2:${{ github.sha }}'
 
