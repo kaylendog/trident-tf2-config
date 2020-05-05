@@ -9,48 +9,59 @@ RUN set -x \
     wget=1.20.1-1.1 \
     ca-certificates=20190110 
 
-WORKDIR /home/steamcmd
+WORKDIR /home/steam
 
-RUN wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -
+# Install SteamCMD in ~/steamcmd
+USER steam
+RUN mkdir steamcmd \
+    && cd steamcmd \ 
+    && wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -
 
-WORKDIR /home/
-
-RUN [ "./steamcmd/steamcmd.sh", "+login anonymous", "+force_install_dir ./instances", "+app_update 232250 validate", "+quit"]
+# Install TF2 as steam user.
+RUN [ "./steamcmd/steamcmd.sh", "+login anonymous", "+force_install_dir /home/steam/tf2", "+app_update 232250 validate", "+quit'"]
 
 # Install sourcemod
-RUN cd ./instances/tf2/tf  \
+RUN cd /home/steam/tf2/tf \
     && wget -qO- https://raw.githubusercontent.com/CM2Walki/TF2/master/etc/cfg.tar.gz | tar xvzf - \
     && wget -qO- https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git971-linux.tar.gz | tar xvzf - \
     && wget -qO- https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6454-linux.tar.gz | tar xvzf - 
 
+# Remove content not needed to minify image.
+RUN rm -rf /home/steam/tf2/tf/maps
+
 # Clean up image
+USER root
 RUN apt-get remove --purge -y \
     wget \
     && apt-get clean autoclean \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
-
-WORKDIR /home/instances/tf2
+WORKDIR /home/steam/tf2
 
 # Copy configuration
-COPY ./tf ./tf
-COPY ./tf2_update.txt .
-COPY ./sourcemod/ ./addons/sourcemod
+USER steam
 
-VOLUME [ "/home/instances/tf2" ]
+COPY ./tf2_update.txt .
+COPY ./tf ./tf
+COPY ./addons/ ./tf/addons/
 
 ENV TOKEN=
+
+WORKDIR /home/steam/tf2
 
 ENTRYPOINT ./srcds_run \
     -game tf \
     -console \
-    -autoupdate \
-    -steam_dir /home/steamcmd \
-    -steamcmd_script ./tf2_update.txt \
+    # auto update logic - doesn't work
+    #    -autoupdate \
+    #    -steam_dir /home/steamcmd \
+    #    -steamcmd_script ./tf2_update.txt \
     +sv_pure 1 \ 
     +randommap \ 
     +maxplayers 24 \ 
     +sv_setsteamaccount ${TOKEN}
 
 EXPOSE 27015/tcp 27015/udp 27020/udp
+
+VOLUME [ "/home/steam/tf2" ]
