@@ -6,8 +6,15 @@ echo Trident TF2 Instance - Docker
 echo -----------------------------
 echo
 
+validate_install () {
+    echo Validating install...
+    ./tf2server validate
+}
+
 update () {
-    echo Updating TF2...
+    echo Checking for server updates...
+    ./tf2server update
+    validate_install
 }
 
 install () {
@@ -22,7 +29,7 @@ install_tf2 () {
     printf "%s\n" Y Y $GSLT_TOKEN Y Y | ./tf2server install
     
     echo Validating install...
-    ./tf2server validate
+    validate_install
 }
 
 install_sourcemod () {
@@ -34,8 +41,9 @@ install_sourcemod () {
     wget -O- https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6454-linux.tar.gz | tar xvzf -   
 }
 
+
 run () {     
-    if [ -d "serverfiles" ] 
+    if [ -d "serverfiles/tf" ] 
     then
         update
     else
@@ -45,4 +53,4 @@ run () {
 }
 
 run
-
+./start
