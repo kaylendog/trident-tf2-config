@@ -31,6 +31,7 @@ RUN bash linuxgsm.sh tf2server
 ENV GSLT_TOKEN=
 
 COPY --chown=tf2server . .
+RUN ls -l
 
 RUN ./verify.sh
 ENTRYPOINT [ "./install.sh" ]
