@@ -37,4 +37,6 @@ RUN chmod +x install.sh \
     && chmod +x start.sh 
 
 RUN ./verify.sh
+
+VOLUME [ "/home/tf2server/serverfiles" ]
 ENTRYPOINT [ "./install.sh" ]

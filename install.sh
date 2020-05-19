@@ -19,7 +19,7 @@ install () {
 }
 
 install_tf2 () {
-    printf "%s\n" Y Y $GSLT_TOKEN Y | ./tf2server install
+    printf "%s\n" Y Y $GSLT_TOKEN Y Y | ./tf2server install
     
     echo Validating install...
     ./tf2server validate
