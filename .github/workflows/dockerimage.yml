@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+  
+    - name: Login to Docker
+      run: docker login  -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build container image
+      run: docker build . --tag skyefuzz/trident-tf2-config:${{ github.sha }}
+  
+    - name: Push image to Docker Hub
+      run: docker push skyefuzz/trident-tf2-config
+    
