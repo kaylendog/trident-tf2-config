@@ -30,8 +30,11 @@ RUN bash linuxgsm.sh tf2server
 
 ENV GSLT_TOKEN=
 
+# Copy scripts and make executable.
 COPY --chown=tf2server . .
-RUN ls -l
+RUN chmod +x install.sh \
+    && chmod +x verify.sh \
+    && chmod +x start.sh 
 
 RUN ./verify.sh
 ENTRYPOINT [ "./install.sh" ]
