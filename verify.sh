@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 required_files=( "_files" "install.sh" "start.sh" )
 
 for i in "${required_files[@]}"
