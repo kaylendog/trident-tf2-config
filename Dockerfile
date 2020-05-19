@@ -1,68 +1,34 @@
-FROM debian:buster-slim
+FROM ubuntu:bionic
 
-# Install required dependancies.
-RUN set -x \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends --no-install-suggests \
-    lib32stdc++6=8.3.0-6 \
-    lib32gcc1=1:8.3.0-6 \
-    wget=1.20.1-1.1 \
-    ca-certificates=20190110 
+# Fix key errors
+RUN apt clean
 
-RUN useradd -u 1000 -m steam
-WORKDIR /home/steam
+# Install dependancies
+RUN  dpkg --add-architecture i386 \ 
+    && apt update -y \
+    && apt install -y mailutils postfix curl wget \
+    file tar bzip2 gzip unzip bsdmainutils python \
+    util-linux ca-certificates binutils bc jq tmux \ 
+    lib32gcc1 libstdc++6 lib32stdc++6 netcat \ 
+    libcurl4-gnutls-dev:i386 libtcmalloc-minimal4:i386
 
-# Install SteamCMD in ~/steamcmd
-USER steam
-RUN mkdir steamcmd \
-    && cd steamcmd \ 
-    && wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -
+# Install SteamCMD
+RUN echo steam steam/question select "I AGREE" | debconf-set-selections \
+    && echo steam steam/license note '' | debconf-set-selections \
+    && apt install -y steamcmd
 
-# Install TF2 as steam user.
-RUN [ "./steamcmd/steamcmd.sh", "+login anonymous", "+force_install_dir /home/steam/tf2", "+app_update 232250 validate", "+quit"]
+# Set up tf2server user
+RUN useradd -ms /bin/bash tf2server
+WORKDIR /home/tf2server/
 
-# Install sourcemod
-RUN cd /home/steam/tf2/tf \
-    && wget -qO- https://raw.githubusercontent.com/CM2Walki/TF2/master/etc/cfg.tar.gz | tar xvzf - \
-    && wget -qO- https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git971-linux.tar.gz | tar xvzf - \
-    && wget -qO- https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6454-linux.tar.gz | tar xvzf - 
+# Download setup script
+RUN wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh
 
-# Remove content not needed to minify image.
-RUN rm -rf /home/steam/tf2/tf/maps
+# Run setup script
+USER tf2server
+RUN bash linuxgsm.sh tf2server
 
-# Clean up image
-USER root
-RUN apt-get remove --purge -y \
-    wget \
-    && apt-get clean autoclean \
-    && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/*
+ENV GSLT_TOKEN=
 
-WORKDIR /home/steam/tf2
-
-# Copy configuration
-USER steam
-
-COPY ./tf2_update.txt .
-COPY ./tf ./tf
-COPY ./addons/ ./tf/addons/
-
-ENV TOKEN=
-
-WORKDIR /home/steam/tf2
-
-ENTRYPOINT ./srcds_run \
-    -game tf \
-    -console \
-    # auto update logic - doesn't work
-    #    -autoupdate \
-    #    -steam_dir /home/steamcmd \
-    #    -steamcmd_script ./tf2_update.txt \
-    +sv_pure 1 \ 
-    +randommap \ 
-    +maxplayers 24 \ 
-    +sv_setsteamaccount ${TOKEN}
-
-EXPOSE 27015/tcp 27015/udp 27020/udp
-
-VOLUME [ "/home/steam/tf2" ]
+COPY . .
+ENTRYPOINT [ "./install.sh" ]
