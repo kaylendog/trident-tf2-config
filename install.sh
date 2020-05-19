@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo
 echo -----------------------------
 echo Trident TF2 Instance - Docker
