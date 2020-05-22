@@ -41,6 +41,9 @@ install_sourcemod () {
     wget -qO- https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6454-linux.tar.gz | tar xvzf -   
 }
 
+echo Checking internet connection...
+ping 1.1.1.1 -c 4
+
 if [ -d "serverfiles/tf" ] 
 then
     update
