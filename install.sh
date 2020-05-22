@@ -59,6 +59,7 @@ run () {
     fi
 }
 
+permfix
 run
 
 cd /home/tf2server
