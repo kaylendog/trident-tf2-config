@@ -6,6 +6,13 @@ echo Trident TF2 Instance - Docker
 echo -----------------------------
 echo
 
+perm_fix() {
+    echo Fixing permissions... 
+    cd /home/
+    chown -R tf2server
+    cd tf2server
+}
+
 validate_install () {
     echo Validating install...
     ./tf2server validate
@@ -53,4 +60,6 @@ run () {
 }
 
 run
+
+cd /home/tf2server
 ./start
