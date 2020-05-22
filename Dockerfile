@@ -33,11 +33,8 @@ ENV GSLT_TOKEN=
 
 # Copy scripts and make executable.
 COPY --chown=tf2server . .
-RUN chmod +x install.sh \
-    && chmod +x verify.sh \
-    && chmod +x start.sh 
-
+RUN chmod +x verify.sh 
 RUN ./verify.sh
 
-VOLUME [ "/home/tf2server/serverfiles" ]
 ENTRYPOINT [ "./install.sh" ]
+VOLUME [ "/home/tf2server/serverfiles" ]
