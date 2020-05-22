@@ -10,7 +10,9 @@ RUN  dpkg --add-architecture i386 \
     file tar bzip2 gzip unzip bsdmainutils python \
     util-linux ca-certificates binutils bc jq tmux \ 
     lib32gcc1 libstdc++6 lib32stdc++6 netcat \ 
-    libcurl4-gnutls-dev:i386 libtcmalloc-minimal4:i386
+    libcurl4-gnutls-dev:i386 libtcmalloc-minimal4:i386 \
+    iputils-ping iproute2
+
 
 # Install SteamCMD
 RUN echo steam steam/question select "I AGREE" | debconf-set-selections \
