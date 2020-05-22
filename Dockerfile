@@ -23,6 +23,7 @@ WORKDIR /home/tf2server/
 
 # Download setup script
 RUN wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh
+RUN chown -R tf2server .
 
 # Run setup script
 USER tf2server
