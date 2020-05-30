@@ -20,7 +20,7 @@ if [ -d "./lgsm" ] && [ -f "tf2server" ]; then
     echo info: LGSM appears to be installed already - skipping...
 else
     echo info: Installing LGSM...
-    wget -qO- linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh tf2server
+    wget -O- linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh tf2server
 fi
 
 if [ ! -f "tf2server" ]; then
