@@ -18,7 +18,7 @@ apt install -y steamcmd
 
 # Create user
 echo info: Creating user 'tf2'...
-useradd tf2
+useradd -m tf2
 su tf2
 
 # Enter into TF2 home directory.
