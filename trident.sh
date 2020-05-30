@@ -1,7 +1,6 @@
 VERSION=1.0.0
 UPDATED=30/05/20
 SUBJECT=3621
-LOCK_FILE=/tmp/${SUBJECT}.lock
 
 echo Trident Configuration
 echo version $VERSION updated $UPDATED; echo
@@ -20,7 +19,7 @@ if [ -d "./lgsm" ] && [ -f "tf2server" ]; then
     echo info: LGSM appears to be installed already - skipping...
 else
     echo info: Installing LGSM...
-    wget -O- linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh tf2server
+    wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh tf2server
 fi
 
 if [ ! -f "tf2server" ]; then
