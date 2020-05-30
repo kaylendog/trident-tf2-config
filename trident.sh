@@ -9,6 +9,7 @@ echo version $VERSION updated $UPDATED; echo
 echo info: Downloading OS dependancies...
 dpkg --add-architecture i386; 
 apt update; 
+export DEBIAN_FRONTEND=noninteractive
 apt install -y unzip binutils jq netcat lib32gcc1 lib32stdc++6 libcurl4-gnutls-dev:i386 libtcmalloc-minimal4:i386
 
 echo info: Installing SteamCMD...
