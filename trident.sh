@@ -48,7 +48,7 @@ if [ ! -d $GAME_DIRECTORY ]; then
 fi
 
 # Check that game directory is valid.
-if [ ! -d "$GAME_DIRECTORY/tf" ] || [ ! -d "$GAME_DIRECTORY/hl2" ] ; then
+if [ ! -d $GAME_DIRECTORY/tf ] || [ ! -d $GAME_DIRECTORY/hl2 ] ; then
     echo "error: Invalid game directory."
     exit;
 fi
