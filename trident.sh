@@ -41,8 +41,6 @@ fi
 
 printf "%s\n" Y Y $GSLT_TOKEN Y Y | ./tf2server install
 
-exit;
-
 # Check for missing game directory.
 if [ ! -d $GAME_DIRECTORY ]; then
     echo error: Specified directory does not exist.
