@@ -10,12 +10,12 @@ echo info: Downloading OS dependancies...
 dpkg --add-architecture i386; 
 apt update; 
 export DEBIAN_FRONTEND=noninteractive
-apt install -y unzip binutils jq netcat lib32gcc1 lib32stdc++6 libcurl4-gnutls-dev:i386 libtcmalloc-minimal4:i386
+apt install -yq unzip binutils jq netcat lib32gcc1 lib32stdc++6 libcurl4-gnutls-dev:i386 libtcmalloc-minimal4:i386
 
 echo info: Installing SteamCMD...
 echo steam steam/question select "I AGREE" | debconf-set-selections 
 echo steam steam/license note "" | debconf-set-selections 
-apt install -y steamcmd
+apt install -yq steamcmd
 
 # Create user
 echo info: Creating user 'tf2'...
