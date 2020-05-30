@@ -5,30 +5,14 @@ SUBJECT=3621
 echo Trident Configuration
 echo version $VERSION updated $UPDATED; echo
 
-function require_dep() {
-    if ! [ -x "$(command -v $1)" ]; then
-        echo error: Required dependancy $1 is missing.
-        exit
-    fi
-}
-
 echo info: Checking dependancies...
 require_dep wget
 
-if [ -d "./lgsm" ] && [ -f "tf2server" ]; then
-    echo info: LGSM appears to be installed already - skipping...
-else
-    echo info: Installing LGSM...
-    wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh tf2server
+if [ ! -d "./lgsm" ] && [ ! -f "tf2server" ]; then
+    echo "error: LGSM does not appear to be installed - downloading it for you..."
+    wget -qO linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh
+    echo "info: Run ./linuxgsm.sh tf2server to continue."
 fi
-
-if [ ! -f "tf2server" ]; then
-    echo error: LGSM installation failed - is there a network connection?
-    exit
-fi
-
-echo info: Installing TF2...
-./tf2server install
 
 GAME_DIRECTORY=$1
 
