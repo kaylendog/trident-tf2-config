@@ -1,15 +1,22 @@
 VERSION=1.0.0
 UPDATED=30/05/20
-SUBJECT=3621
+GAME_DIRECTORY=/home/tf2/serverfiles
 
 echo Trident Configuration
 echo version $VERSION updated $UPDATED; echo
 
+# Install OS dependancies
 echo info: Downloading OS dependancies...
 dpkg --add-architecture i386; 
 apt update; 
-apt install -y unzip binutils jq netcat lib32gcc1 lib32stdc++6 steamcmd libcurl4-gnutls-dev:i386 libtcmalloc-minimal4:i386
+apt install -y unzip binutils jq netcat lib32gcc1 lib32stdc++6 libcurl4-gnutls-dev:i386 libtcmalloc-minimal4:i386
 
+echo info: Installing SteamCMD...
+echo steam steam/question select "I AGREE" | debconf-set-selections 
+echo steam steam/license note "" | debconf-set-selections 
+apt install -y steamcmd
+
+# Create user
 echo info: Creating user 'tf2'...
 useradd tf2
 su tf2
@@ -32,8 +39,6 @@ fi
 printf "%s\n" Y Y $GSLT_TOKEN Y Y | ./tf2server install
 
 exit;
-
-GAME_DIRECTORY=/home/tf2/serverfiles
 
 # Check for missing game directory.
 if [ ! -d $GAME_DIRECTORY ]; then
