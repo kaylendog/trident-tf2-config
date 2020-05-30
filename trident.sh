@@ -49,7 +49,8 @@ fi
 
 # Install SourceMod.
 echo info: Installing SourceMod...
-cd "$GAME_DIRECTORY/tf"
+cd $GAME_DIRECTORY
+cd tf
 
 wget -qO- https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git971-linux.tar.gz | tar xvzf -
 wget -qO- https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6454-linux.tar.gz | tar xvzf -
