@@ -57,6 +57,6 @@ wget -qO- https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6454-linux.t
 echo success: Done.
 echo info: Extracting configuration...
 
-wget -qO- https://raw.githubusercontent.com/skyefoxie/trident-tf2-config/master/config.tar.gz
+wget -qO- https://raw.githubusercontent.com/skyefoxie/trident-tf2-config/master/config.tar.gz | tar xvzf -
 
 echo success: Done.
