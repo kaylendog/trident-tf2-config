@@ -47,12 +47,6 @@ if [ ! -d $GAME_DIRECTORY ]; then
     exit;
 fi
 
-# Check that game directory is valid.
-if [ ! -d $GAME_DIRECTORY/tf ] || [ ! -d $GAME_DIRECTORY/hl2 ] ; then
-    echo "error: Invalid game directory."
-    exit;
-fi
-
 # Install SourceMod.
 echo info: Installing SourceMod...
 cd "$GAME_DIRECTORY/tf"
