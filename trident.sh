@@ -12,6 +12,7 @@ if [ ! -d "./lgsm" ] && [ ! -f "tf2server" ]; then
     echo "error: LGSM does not appear to be installed - downloading it for you..."
     wget -qO linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh
     echo "info: Run ./linuxgsm.sh tf2server to continue."
+    exit
 fi
 
 GAME_DIRECTORY=$1
