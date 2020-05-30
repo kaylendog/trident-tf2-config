@@ -27,7 +27,9 @@ cd /home/tf2
 
 if [ ! -d "./lgsm" ] && [ ! -f "tf2server" ]; then
     echo "error: LGSM does not appear to be installed - downloading it for you."
-    curl -o- https://linuxgsm.sh | bash -s tf2server
+    wget -O linuxgsm.sh https://linuxgsm.sh
+    chmod +x linuxgsm.sh 
+    ./linuxgsm.sh tf2server
 fi
 
 # Install
