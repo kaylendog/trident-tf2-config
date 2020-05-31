@@ -24,6 +24,7 @@ echo info: Enabling firewall...
 ufw enable <<< $"y\n"
 ufw allow 27015
 ufw allow 27020/udp
+ufw allow 22
 
 # Create user
 echo info: Creating user 'tf2'...
@@ -74,4 +75,4 @@ echo info: Extracting configuration...; echo
 
 wget -qO- https://raw.githubusercontent.com/skyefoxie/trident-tf2-config/master/config.tar.gz | tar xvzf -
 
-echo; success: Done. echo;
+echo; success: Done. echo; 
