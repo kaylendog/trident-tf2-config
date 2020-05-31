@@ -22,7 +22,7 @@ apt install -yq steamcmd
 # Enable UFW and add firewall.
 echo info: Enabling firewall...
 ufw enable <<< $"y\n"
-ufw allow 27015
+ufw allow 27015/udp
 ufw allow 27020/udp
 ufw allow 22
 
