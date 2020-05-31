@@ -69,4 +69,4 @@ echo info: Extracting configuration...; echo
 
 wget -qO- https://raw.githubusercontent.com/skyefoxie/trident-tf2-config/master/config.tar.gz | tar xvzf -
 
-echo success: Done.
+echo; success: Done. echo;
