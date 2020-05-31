@@ -12,13 +12,18 @@ apt update;
 export DEBIAN_FRONTEND=noninteractive
 apt install -yq unzip binutils jq netcat lib32gcc1 lib32stdc++6 libcurl4-gnutls-dev:i386 libtcmalloc-minimal4:i386 zsh
 
-
 echo info: Installing SteamCMD...
 echo steam steam/question select "I AGREE" | debconf-set-selections 
 echo steam steam/license note "" | debconf-set-selections 
 #"
 # Line above just to fix formatting issue
 apt install -yq steamcmd
+
+# Enable UFW and add firewall.
+echo info: Enabling firewall...
+ufw enable <<< $"y\n"
+ufw allow 27015
+ufw allow 27020/udp
 
 # Create user
 echo info: Creating user 'tf2'...
