@@ -34,7 +34,7 @@ su tf2
 cd /home/tf2
 
 # Install utility tools
-if [ ! -d ".oh-my-zsh"]; then
+if [ ! -d ".oh-my-zsh" ]; then
     echo info: Installing OhMyZSH and Homebrew...
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -75,4 +75,4 @@ echo info: Extracting configuration...; echo
 
 wget -qO- https://raw.githubusercontent.com/skyefoxie/trident-tf2-config/master/config.tar.gz | tar xvzf -
 
-echo; success: Done. echo; 
+echo; echo success: Done. echo; 
